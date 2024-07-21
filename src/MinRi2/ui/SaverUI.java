@@ -39,7 +39,15 @@ public class SaverUI{
                 timekeeper.reset();
 
                 image.setOrigin(Align.center);
-                image.actions(Actions.rotateBy(-360, 1f, Interp.smooth));
+                image.actions(
+                Actions.parallel(
+                    Actions.sequence(
+                        Actions.scaleTo(1.2f, 1.2f, 0.5f, Interp.smooth),
+                        Actions.scaleTo(1f, 1f, 0.5f, Interp.smooth)
+                    ),
+                    Actions.rotateBy(-360, 1f, Interp.smooth)
+                )
+                );
             }
         });
 
