@@ -1,0 +1,69 @@
+package MinRi2;
+
+import arc.*;
+import arc.func.*;
+import arc.struct.*;
+
+/**
+ * @author minri2
+ * Create by 2024/7/20
+ */
+
+// TODO: Auto generated.
+public class AutoSaverSetting{
+    private final ObjectMap<String, Seq<Cons<?>>> waterMap;
+
+    public AutoSaverSetting(){
+        waterMap = new ObjectMap<>();
+
+        Core.settings.defaults(
+        SaverVars.modPrefix + "savesAmount", 5,
+        SaverVars.modPrefix + "savePerMinute", 0.5f,
+        SaverVars.modPrefix + "saveMods", false,
+        SaverVars.modPrefix + "autoSave", true
+        );
+    }
+
+    public void put(String name, Object value){
+        Core.settings.put(SaverVars.modPrefix + name, value);
+        fire(name, value);
+    }
+
+    public <T> T get(String name){
+        return (T)get(name, Core.settings.getDefault(SaverVars.modPrefix + name));
+    }
+
+    public <T> T get(String name, T defValue){
+        return (T)Core.settings.get(SaverVars.modPrefix + name, defValue);
+    }
+
+    public int getSavesAmount(){
+        return Core.settings.getInt(SaverVars.modPrefix + "savesAmount");
+    }
+
+    public float getSavePerMinute(){
+        return Core.settings.getFloat(SaverVars.modPrefix + "savePerMinute");
+    }
+
+    public boolean getSaveMods(){
+        return Core.settings.getBool(SaverVars.modPrefix + "saveMods");
+    }
+
+    public boolean getAutoSave(){
+        return Core.settings.getBool(SaverVars.modPrefix + "autoSave");
+    }
+
+    public <T> void watch(String name, Cons<T> cons){
+        waterMap.get(SaverVars.modPrefix + name, () -> new Seq<>(Cons.class)).add(cons);
+    }
+
+    private <T> void fire(String name, T value){
+        Seq<Cons<?>> seq = waterMap.get(SaverVars.modPrefix + name);
+
+        if(seq == null || seq.isEmpty()) return;
+
+        for(Cons<?> cons : seq){
+            ((Cons<T>)cons).get(value);
+        }
+    }
+}

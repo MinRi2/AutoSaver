@@ -18,10 +18,14 @@ java{
 ext{
     //the build number that this mod is made for
     mindustryVersion = 'v146'
-    jabelVersion = "93fde537c7"
+    mindustryXVersion = 'ca40f700fb'
+    uncVersion = '3397fc68eb'
+
     //windows sucks
     isWindows = System.getProperty("os.name").toLowerCase().contains("windows")
     sdkRoot = System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT")
+
+    modDir = "${System.getenv("APPDATA")}\\Mindustry\\mods"
 }
 
 //java 8 backwards compatibility flag
@@ -32,10 +36,10 @@ allprojects{
 }
 
 dependencies{
-    compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
-    compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
+    annotationProcessor "com.github.EB-wilson.UniverseCore:annotations:$uncVersion" // 使用Unc注解处理器替代jabel
 
-    annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
+    compileOnly "com.github.anuken.arc:arc-core:$mindustryVersion"
+    compileOnly "com.github.TinyLake.MindustryX:core:$mindustryXVersion"
 }
 
 //force arc version
@@ -95,6 +99,18 @@ task deploy(type: Jar){
         delete{
             delete "$buildDir/libs/${project.archivesBaseName}Desktop.jar"
             delete "$buildDir/libs/${project.archivesBaseName}Android.jar"
+        }
+    }
+}
+
+task compileAndCopy{
+    dependsOn jar
+
+    doLast{
+        copy{
+            from "$buildDir/libs/"
+            into "$modDir/"
+            include "${project.archivesBaseName}Desktop.jar"
         }
     }
 }

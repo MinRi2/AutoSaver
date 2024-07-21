@@ -1,5 +1,8 @@
-# Mindustry Java Mod Template
-A Java Mindustry mod template that works on Android and PC. The Kotlin version of this mod can be seen [here](https://github.com/Anuken/MindustryKotlinModTemplate).
+# AutoSaver
+
+Got mad by the lost of data while playing or editing map?
+
+This mod, will save your data per 5min while playing or editing, may help you solve this problem.
 
 ## Building for Desktop Testing
 
