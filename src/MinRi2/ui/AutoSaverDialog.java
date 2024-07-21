@@ -115,8 +115,9 @@ public class AutoSaverDialog extends BaseDialog{
     private void setupSettingsTable(Table settingsTable){
         settingsTable.defaults().pad(8).growX();
 
-        booleanSetting(settingsTable, "autoSave");
+        booleanSetting(settingsTable, "autoSaveInGame");
         booleanSetting(settingsTable, "saveMods");
+        booleanSetting(settingsTable, "saveInServer");
 
         numberSetting(settingsTable, "savesAmount", 1, maxSavesAmount, 1, Number::intValue);
         numberSetting(settingsTable, "savePerMinute", 1, maxSavePerMinute, 1, Number::floatValue, n -> n + "min");

@@ -17,10 +17,11 @@ public class AutoSaverSetting{
         waterMap = new ObjectMap<>();
 
         Core.settings.defaults(
-        SaverVars.modPrefix + "savesAmount", 5,
-        SaverVars.modPrefix + "savePerMinute", 0.5f,
+        SaverVars.modPrefix + "autoSaveInGame", true,
         SaverVars.modPrefix + "saveMods", false,
-        SaverVars.modPrefix + "autoSave", true
+        SaverVars.modPrefix + "saveInServer", false,
+        SaverVars.modPrefix + "savesAmount", 5,
+        SaverVars.modPrefix + "savePerMinute", 5f
         );
     }
 
@@ -38,19 +39,23 @@ public class AutoSaverSetting{
     }
 
     public int getSavesAmount(){
-        return Core.settings.getInt(SaverVars.modPrefix + "savesAmount");
+        return get("savesAmount");
     }
 
     public float getSavePerMinute(){
-        return Core.settings.getFloat(SaverVars.modPrefix + "savePerMinute");
+        return get("savePerMinute");
     }
 
     public boolean getSaveMods(){
-        return Core.settings.getBool(SaverVars.modPrefix + "saveMods");
+        return get("saveMods");
     }
 
-    public boolean getAutoSave(){
-        return Core.settings.getBool(SaverVars.modPrefix + "autoSave");
+    public boolean getAutoSaveInGame(){
+        return get("autoSaveInGame");
+    }
+
+    public boolean getSaveInServer(){
+        return get("saveInServer");
     }
 
     public <T> void watch(String name, Cons<T> cons){

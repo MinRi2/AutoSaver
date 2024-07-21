@@ -38,7 +38,10 @@ public class AutoSaver{
         });
 
         Events.run(Trigger.update, () -> {
-            if(!SaverVars.setting.getAutoSave() || !Vars.state.isGame()){
+            boolean autoSaveInGame = SaverVars.setting.getAutoSaveInGame() && Vars.state.isGame() && !Vars.state.isEditor()
+            && (!Vars.net.client() || SaverVars.setting.getSaveInServer());
+
+            if(!autoSaveInGame){
                 timekeeper.reset();
                 return;
             }
