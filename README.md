@@ -1,8 +1,10 @@
 # AutoSaver
 
-Got mad by the lost of data while playing or editing map?
+Got mad by the lost of data while playing?
 
-This mod, will save your data per 5min while playing or editing, may help you solve this problem.
+This mod, will save your data per 5min while playing, may help you solve this problem.
+
+<img src="./.github/images/AutoSaverDialog.png">
 
 ## Building for Desktop Testing
 
