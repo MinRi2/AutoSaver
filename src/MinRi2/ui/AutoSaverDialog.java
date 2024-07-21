@@ -91,7 +91,7 @@ public class AutoSaverDialog extends BaseDialog{
 
         rebuildSavesTable();
 
-        saveWidth = Core.graphics.getWidth() * Scl.scl(Core.graphics.getWidth() > 1000 ? 0.4f : 0.8f);
+        saveWidth = Core.graphics.getWidth() * Scl.scl(Core.graphics.getWidth() > 1000 ? 0.5f : 0.8f);
 
         cont.defaults().pad(0);
 
@@ -225,7 +225,7 @@ public class AutoSaverDialog extends BaseDialog{
 
         table.button(b -> {
             b.add(image).size(32);
-            b.add(Core.bundle.get(SaverVars.settingPrefix + name, name)).padLeft(8).expandX().left();
+            b.add(Core.bundle.get(SaverVars.settingPrefix + name, name)).style(Styles.outlineLabel).padLeft(8).expandX().left();
         }, Styles.clearNonei, () -> {
             boolean old = SaverVars.setting.get(name);
             SaverVars.setting.put(name, !old);
