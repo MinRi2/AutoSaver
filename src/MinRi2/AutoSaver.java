@@ -180,6 +180,13 @@ public class AutoSaver{
         return metas;
     }
 
+    public void removeMeta(SaveMeta meta){
+        checkMetas();
+
+        meta.saveFi.delete();
+        metas.remove(meta);
+    }
+
     public static class SaveMeta implements Comparable<SaveMeta>{
         // Needn't save.
         public transient Fi saveFi;

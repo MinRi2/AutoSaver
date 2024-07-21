@@ -65,7 +65,7 @@ public class AutoSaverDialog extends BaseDialog{
         }};
 
         titleStyle = new LabelStyle(Styles.outlineLabel){{
-           fontColor = Pal.accent;
+            fontColor = Pal.accent;
         }};
 
         indexStyle = new LabelStyle(Styles.outlineLabel){{
@@ -110,6 +110,16 @@ public class AutoSaverDialog extends BaseDialog{
                 table.add(savesTable).grow();
             }).padTop(4).grow();
         }).width(saveWidth).growY();
+    }
+
+    private void setupSettingsTable(Table settingsTable){
+        settingsTable.defaults().pad(8).growX();
+
+        booleanSetting(settingsTable, "autoSave");
+        booleanSetting(settingsTable, "saveMods");
+
+        numberSetting(settingsTable, "savesAmount", 1, maxSavesAmount, 1, Number::intValue);
+        numberSetting(settingsTable, "savePerMinute", 1, maxSavePerMinute, 1, Number::floatValue, n -> n + "min");
     }
 
     private void rebuildSavesTable(){
@@ -162,16 +172,6 @@ public class AutoSaverDialog extends BaseDialog{
         }
     }
 
-    private void setupSettingsTable(Table settingsTable){
-        settingsTable.defaults().pad(8).growX();
-
-        booleanSetting(settingsTable, "autoSave");
-        booleanSetting(settingsTable, "saveMods");
-
-        numberSetting(settingsTable, "savesAmount", 1, maxSavesAmount, 1, Number::intValue);
-        numberSetting(settingsTable, "savePerMinute", 1, maxSavePerMinute, 1, Number::floatValue, n -> n + "min");
-    }
-
     private void setupSaveMetaTable(Table table, SaveMeta meta){
         table.table(Styles.grayPanel, rightTable -> {
             rightTable.top();
@@ -187,6 +187,21 @@ public class AutoSaverDialog extends BaseDialog{
                 infoTable.row();
                 addInfo(infoTable, "mods", meta.mods);
             }).pad(8f).grow();
+
+            rightTable.fill(rightBottomTable -> {
+                rightBottomTable.bottom().right();
+
+                rightBottomTable.table(getColoredRegion(Pal.darkerGray), buttons -> {
+                    buttons.defaults().size(48).pad(8);
+
+                    buttons.button(Icon.trash, Styles.clearNonei, () -> {
+                        Vars.ui.showConfirm(Core.bundle.format(SaverVars.modPrefix + "deleteSave", meta.saveDate), () -> {
+                            SaverVars.saver.removeMeta(meta);
+                            rebuildSavesTable();
+                        });
+                    });
+                });
+            });
 
             rightTable.defaults().reset();
 
@@ -212,7 +227,7 @@ public class AutoSaverDialog extends BaseDialog{
     private void addInfo(Table table, String name, Object value){
         table.table(content -> {
             content.add(Core.bundle.get(SaverVars.modPrefix + name)).color(Pal.lightishGray);
-            content.add(""  + value).style(Styles.outlineLabel).padLeft(8).expand().left();
+            content.add("" + value).style(Styles.outlineLabel).padLeft(8).expand().left();
         }).padLeft(4f).padTop(8f).growX();
     }
 
