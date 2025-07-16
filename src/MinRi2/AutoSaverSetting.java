@@ -11,10 +11,10 @@ import arc.struct.*;
 
 // TODO: Auto generated.
 public class AutoSaverSetting{
-    private final ObjectMap<String, Seq<Cons<?>>> waterMap;
+    private final ObjectMap<String, Seq<Cons<?>>> watcherMap;
 
     public AutoSaverSetting(){
-        waterMap = new ObjectMap<>();
+        watcherMap = new ObjectMap<>();
 
         Core.settings.defaults(
         SaverVars.modPrefix + "autoSaveInGame", true,
@@ -59,11 +59,11 @@ public class AutoSaverSetting{
     }
 
     public <T> void watch(String name, Cons<T> cons){
-        waterMap.get(SaverVars.modPrefix + name, () -> new Seq<>(Cons.class)).add(cons);
+        watcherMap.get(SaverVars.modPrefix + name, () -> new Seq<>(Cons.class)).add(cons);
     }
 
     private <T> void fire(String name, T value){
-        Seq<Cons<?>> seq = waterMap.get(SaverVars.modPrefix + name);
+        Seq<Cons<?>> seq = watcherMap.get(SaverVars.modPrefix + name);
 
         if(seq == null || seq.isEmpty()) return;
 

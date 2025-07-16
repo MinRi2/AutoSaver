@@ -91,7 +91,7 @@ public class AutoSaverDialog extends BaseDialog{
 
         rebuildSavesTable();
 
-        saveWidth = Core.graphics.getWidth() * Scl.scl(Core.graphics.getWidth() > 1000 ? 0.5f : 0.8f);
+        saveWidth = Math.min(Core.graphics.getWidth() * Scl.scl(Core.graphics.getWidth() > 1000 ? 0.5f : 0.8f), 1000f);
 
         cont.defaults().pad(0);
 
@@ -133,11 +133,11 @@ public class AutoSaverDialog extends BaseDialog{
         savesTable.defaults().top();
 
         savesTable.button(b -> {
-            b.image(Icon.save).size(64).pad(12);
-            b.add(Core.bundle.get(SaverVars.modPrefix + "saveManually"));
+            b.image(Icon.save).size(64).pad(12).color(Pal.heal);
+            b.add(Core.bundle.get(SaverVars.modPrefix + "saveManually")).style(Styles.outlineLabel);
         }, saveManuallyButtonStyle, () -> {
             SaverVars.saver.saveData();
-        }).padTop(8f).padBottom(8f).height(saveWidth / 6f).growX().disabled(b -> SaverVars.saver.saving);
+        }).padTop(8f).padBottom(8f).height(80f).growX().disabled(b -> SaverVars.saver.saving);
 
         savesTable.row();
 
